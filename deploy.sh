@@ -36,7 +36,6 @@ echo "Setting up Docker Swarm for LAYA..." | tee /dev/fd/3
 docker stack deploy -c laya-stack.yaml test 
 
 
-
 echo "Removing all unneccessary files..." | tee /dev/fd/3
 sudo rm -rf laya-vechta-backend 
 sudo rm -rf laya-vechta-frontend
