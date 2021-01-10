@@ -12,5 +12,7 @@ In order to be able to work, your systems needs:
 ## Deployment of LAYA
 
 To deploy LAYA on your system, simply run:
+
 ```sudo ./deploy.sh```
+
 The script will build the Docker containers and put them in a swarm on your system.
