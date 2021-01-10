@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  laya-frontend:
+    image: laya-frontend:0.0.1
+    ports:
+      - "8000:80"
+  laya-backend:
+    image: laya-backend:0.0.1
+    ports:
+      - "3001:3001"
