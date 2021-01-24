@@ -26,9 +26,11 @@ docker build -t laya-backend:0.0.1 .
 
 echo "Building LAYA Frontend Docker Container..." | tee /dev/fd/3
 cd ../laya-vechta-frontend/
-git config advice.detachedHead false # delete when master branch is ready
-git checkout origin/refactor-course-edit # delete when master branch is ready to be deployed
+cp -r ../nginx ./nginx
+#git config advice.detachedHead false # delete when master branch is ready
+#git checkout origin/deploy-prep # delete when master branch is ready to be deployed
 #git pull.ff only
+
 
 docker build -t laya-frontend:0.0.1 .
 
