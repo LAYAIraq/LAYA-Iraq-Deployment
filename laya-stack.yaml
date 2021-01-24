@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   laya-frontend:
@@ -9,3 +9,9 @@ services:
     image: laya-backend:0.0.1
     ports:
       - "3001:3001"
+    volumes:
+      - laya-db:/var/www/laya/backend
+
+volumes:
+  laya-db:
+      
