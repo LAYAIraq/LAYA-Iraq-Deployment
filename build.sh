@@ -42,7 +42,7 @@ cd ..
 
 
 echo "Removing all unneccessary files..." | tee /dev/fd/3
-sudo rm -rf laya-vechta-backend 
-sudo rm -rf laya-vechta-frontend
+# sudo rm -rf laya-vechta-backend 
+# sudo rm -rf laya-vechta-frontend
 
 echo "Docker Containers built! Continue building the swarm using deploy.sh!" | tee /dev/fd/3
