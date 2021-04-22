@@ -1,10 +1,10 @@
 # access keys for git repos
-ACC_FE="97u6MAcyJUcYNE_uMYo6"
-ACC_BE="xS4dyDbYmh-9QcrLkpLg"
+ACC_FE="hUxDKtbjL3uwbtfyN8i3"
+ACC_BE="qZwwfSDpoiaSppoF4dDL"
 
 # logfile for debugging purposes
 timestamp=$(date +%s)
-LOG_FILE=build-${timestamp}.log
+LOG_FILE=./logs/build-${timestamp}.log
 exec 3>&1 1>>${LOG_FILE} 2>&1 #send all output to the log file
 
 echo "Building LAYA Vechta Project for Deployment..." | tee /dev/fd/3
@@ -22,7 +22,7 @@ cd laya-vechta-backend/
 git config advice.detachedHead false # delete when master branch is ready
 git checkout origin/constantin #delete when changes are in master branch
 
-docker build -t laya-backend:0.0.1 .
+docker build -t laya-backend:latest .
 
 echo "Building LAYA Frontend Docker Container..." | tee /dev/fd/3
 cd ../laya-vechta-frontend/
@@ -32,7 +32,7 @@ cp -r ../nginx ./nginx
 #git pull.ff only
 
 
-docker build -t laya-frontend:0.0.1 .
+docker build -t laya-frontend:latest .
 
 cd ..
 

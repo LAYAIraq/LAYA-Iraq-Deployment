@@ -1,6 +1,6 @@
 # logfile for debugging purposes
 timestamp=$(date +%s)
-LOG_FILE=deploy-${timestamp}.log
+LOG_FILE=./logs/deploy-${timestamp}.log
 exec 3>&1 1>>${LOG_FILE} 2>&1 #send all output to the log file
 
 echo "Deploying the Docker Swarm...." | tee /dev/fd/3
