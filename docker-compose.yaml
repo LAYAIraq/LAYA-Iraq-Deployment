@@ -12,6 +12,15 @@ services:
     volumes:
       - laya-db:/var/www/laya/backend
       - laya-files:/var/www/laya/backend/server/files
+  reverse-proxy:
+    image: fsouza/docker-ssl-proxy
+    environment: 
+      - DOMAIN=laya.uni-vechta.de
+      - TARGET_PORT=8000
+      - TARGET_HOST=laya-frontend
+      - SSL_PORT=443
+    volumes:
+      - ./cert:/etc/nginx/certs
 
 volumes:
   laya-db:
