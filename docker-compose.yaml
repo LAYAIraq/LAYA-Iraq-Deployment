@@ -2,27 +2,36 @@ version: "3.7"
 
 services:
   laya-frontend:
-    image: laya-frontend:latest
-    ports:
-      - "8000:80"
+    image: latest-laya:latest
+    restart: unless-stopped
+    # ports:
+    #   - 8000:80
+    volumes:
+      - laya-frontend-files:/usr/share/nginx/html
   laya-backend:
     image: laya-backend:latest
+    restart: always
     ports:
       - "3001:3001"
     volumes:
-      - laya-db:/var/www/laya/backend
-      - laya-files:/var/www/laya/backend/server/files
+      - laya-db:/laya-backend
+      - laya-backend-files:/laya-backend/server/files
   reverse-proxy:
     image: fsouza/docker-ssl-proxy
+    restart: unless-stopped
+    container_name: ssl-proxy
+    ports:
+      - 443:4443
     environment: 
       - DOMAIN=laya.uni-vechta.de
-      - TARGET_PORT=8000
+      - TARGET_PORT=80
       - TARGET_HOST=laya-frontend
-      - SSL_PORT=443
+      - SSL_PORT=4443
     volumes:
       - ./cert:/etc/nginx/certs
 
 volumes:
   laya-db:
-  laya-files:
+  laya-backend-files:
+  laya-frontend-files:
       
