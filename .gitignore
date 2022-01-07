@@ -1,1 +1,4 @@
 *.log
+laya-vechta-backend
+laya-vechta-frontend
+.env
