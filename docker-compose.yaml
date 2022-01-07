@@ -2,36 +2,80 @@ version: "3.7"
 
 services:
   laya-frontend:
-    image: latest-laya:latest
+    image: laya-frontend:test
+#    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-backend/master:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        ACC_FE: $FRONTEND_ACC
+    container_name: laya-frontend
     restart: unless-stopped
-    # ports:
-    #   - 8000:80
+    ports:
+      - "${FRONTEND_PORT}"
     volumes:
       - laya-frontend-files:/usr/share/nginx/html
+#    links:
+#      - laya-backend
   laya-backend:
-    image: laya-backend:latest
+#    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-backend/master:latest
+    image: laya-backend:test
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+      args:
+        ACC_BE: $BACKEND_ACC
+        API_PORT: $API_PORT
+        DB_PATH: $DB_PATH
+        DB_NAME: $DB_NAME
+        FILES_PATH: $FILES_PATH
+#    container_name: laya-backend
     restart: always
     ports:
-      - "3001:3001"
+      - "${API_PORT}"
+    env_file: .env
+    environment:
+      - NODE_ENV=$NODE_ENV
+      - API_ROOT=$API_ROOT
+      - API_PORT=$API_PORT
+      - DB_PATH=$DB_PATH
+      - DB_NAME=$DB_NAME
+      - FILES_PATH=$FILES_PATH
+      - FILES_MAX_SIZE=$FILES_MAX_SIZE
+      - FRONTEND_HOST=$PROXY_DOMAIN
+      - FRONTEND_PORT=443
+      - MAIL_CONNECTOR=$MAIL_CONNECTOR
+      - MAIL_HOST=$MAIL_HOST
+      - MAIL_PORT=$MAIL_PORT
+      - MAIL_AUTH_USER=$MAIL_AUTH_USER
+      - MAIL_AUTH_PASS=$MAIL_AUTH_PASS
     volumes:
-      - laya-db:/laya-backend
-      - laya-backend-files:/laya-backend/server/files
+      - laya-db:/laya-backend/${DB_PATH}
+      - laya-backend-files:/laya-backend/${FILES_PATH}
   reverse-proxy:
-    image: fsouza/docker-ssl-proxy
+    image: cmaufc/ssl-reverse-proxy:v0.2-release
     restart: unless-stopped
     container_name: ssl-proxy
     ports:
-      - 443:4443
-    environment: 
-      - DOMAIN=laya.uni-vechta.de
-      - TARGET_PORT=80
+      - "80:80"
+      - "443:443"
+    environment:
       - TARGET_HOST=laya-frontend
-      - SSL_PORT=4443
+      - TARGET_PORT=80
+      - SERVER_NAME=${PROXY_DOMAIN}
+      - SSL_PORT=443
+      - API_ROOT=${API_ROOT}
+      - API_HOST=laya-backend
+      - API_PORT=${API_PORT}
     volumes:
       - ./cert:/etc/nginx/certs
+      - laya-proxy-logs:/var/log/nginx
+    links:
+      - laya-frontend
+      - laya-backend
 
 volumes:
   laya-db:
   laya-backend-files:
   laya-frontend-files:
-      
+  laya-proxy-logs:
