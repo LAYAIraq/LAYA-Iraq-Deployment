@@ -1,4 +1,4 @@
-# Filename: Dockerfile
+# Filename: Dockerfile.proxy
 # Use: Build a Docker Container
 # Creator: cmc
 # Date: January 16, 2021
