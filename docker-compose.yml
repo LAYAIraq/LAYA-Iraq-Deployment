@@ -7,14 +7,14 @@ services:
     ports:
       - "80"
   laya-backend:
-    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-backend:latest
+    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-backend:lts
     container_name: laya-backend
     restart: unless-stopped
     ports:
       - "3001"
     environment:
       - NODE_ENV=$ENVIRONMENT
-      - ADMIN_MAIL=$ADMIN_MAIL
+      - ADMIN_MAIL=$MAIL_FROM
       - API_ROOT=$API_ROOT
       - API_PORT=$API_PORT
       - DB_PATH=$DB_PATH
@@ -34,7 +34,8 @@ services:
   reverse-proxy:
     image: laya-reverse-proxy:latest
     build:
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.proxy
     container_name: reverse-proxy
     restart: unless-stopped
     ports:
