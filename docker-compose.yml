@@ -34,7 +34,7 @@ services:
   reverse-proxy:
     image: laya-reverse-proxy:latest
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.proxy
     container_name: reverse-proxy
     restart: unless-stopped
     ports:
