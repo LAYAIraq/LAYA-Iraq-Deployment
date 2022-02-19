@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  laya-frontend:
+    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-frontend:v1.0
+    container_name: laya-frontend
+    restart: always
+    ports:
+      - "80"
+  laya-backend:
+    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-backend:latest
+    container_name: laya-backend
+    restart: unless-stopped
+    ports:
+      - "3001"
+    environment:
+      - NODE_ENV=$ENVIRONMENT
+      - ADMIN_MAIL=$ADMIN_MAIL
+      - API_ROOT=$API_ROOT
+      - API_PORT=$API_PORT
+      - DB_PATH=$DB_PATH
+      - DB_NAME=$DB_NAME
+      - FILES_PATH=$FILES_PATH
+      - FILES_MAX_SIZE=$FILES_MAX_SIZE
+      - FRONTEND_HOST=$PROXY_DOMAIN
+      - FRONTEND_PORT=80
+      - MAIL_AUTH_PASS=$MAIL_AUTH_PASS
+      - MAIL_AUTH_USER=$MAIL_AUTH_USER
+      - MAIL_FROM=$MAIL_FROM
+      - MAIL_HOST=$MAIL_HOST
+      - MAIL_PORT=$MAIL_PORT
+    volumes:
+      - laya-db:/laya-backend/db
+      - laya-backend-files:/laya-backend/files
+  reverse-proxy:
+    image: laya-reverse-proxy:latest
+    build:
+      dockerfile: Dockerfile
+    container_name: reverse-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    links:
+      - laya-frontend
+      - laya-backend
+    environment:
+      - TARGET_HOST=laya-frontend
+      - TARGET_PORT=80
+      - SERVER_NAME=$PROXY_DOMAIN
+      - API_ROOT=/api
+      - API_HOST=laya-backend
+      - API_PORT=3001
+    volumes:
+      - proxy-logs:/var/log/nginx
+
+volumes:
+  laya-db:
+  laya-backend-files:
+  proxy-logs:
