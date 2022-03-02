@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   laya-frontend:
-    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-frontend:v1.0
+    image: gitlab.informatik.hu-berlin.de:4567/laya/vechta/laya-vechta-frontend:v1.0.2
     container_name: laya-frontend
     restart: always
     ports:
