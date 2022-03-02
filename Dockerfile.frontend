@@ -10,6 +10,7 @@ RUN npm install
 ARG VUE_APP_BACKEND_HOST
 ARG VUE_APP_BACKEND_PORT
 ARG VUE_APP_BACKEND_ROOT
+ARG VUE_APP_MAX_FILE_SIZE
 RUN npm run build
 
 # Build has to be done in NPM Project
