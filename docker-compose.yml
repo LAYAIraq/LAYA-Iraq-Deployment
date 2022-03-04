@@ -29,8 +29,8 @@ services:
       - MAIL_HOST=$MAIL_HOST
       - MAIL_PORT=$MAIL_PORT
     volumes:
-      - laya-db:/laya-backend/db
-      - laya-backend-files:/laya-backend/files
+      - laya-db:/laya-backend/$DB_PATH
+      - laya-backend-files:/laya-backend/$FILES_PATH
   reverse-proxy:
     image: laya-reverse-proxy:latest
     build:
