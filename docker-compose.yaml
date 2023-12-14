@@ -39,7 +39,7 @@ services:
     env_file: .env
     environment:
       - NODE_ENV=$ENVIRONMENT
-      - ADMIN_MAIL=$ADMIN_MAIL
+      - SUPERADMIN_MAIL=$SUPERADMIN_MAIL
       - API_ROOT=$API_ROOT
       - API_PORT=$API_PORT
       - DB_PATH=$DB_PATH

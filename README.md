@@ -49,7 +49,7 @@ You can optionally set the following variables in the '.env' file:
 
 - `ACC_BACKEND`: access key to clone back end repository during `build` stage.
 - `ACC_FRONTEND`: access key to clone front end repository during `build` stage.
-- `ADMIN_MAIL`: e-mail address of the admin. They will be sent an e-mail to verify the address.
+- `SUPERADMIN_MAIL`: e-mail address of the superadmin. They will be sent an e-mail to verify the address.
 - `API_PORT`: port on which `laya-backend` listens. Defaults to `3001`.
 - `API_ROOT`: suffix for API request calls. Needs leading slash `/`. Defaults to `/api`.
 - `DB_PATH`: path to database directory within the back end container. Used also for mounting `laya-db` volume.
