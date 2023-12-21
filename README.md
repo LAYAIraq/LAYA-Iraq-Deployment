@@ -1,4 +1,4 @@
-# laya-vechta-deployment
+# laya-iraq-deployment
 
 This repository is aimed to make the deployment of LAYA instances as easy as possible. It uses Docker to set up a group that serves Frontend and Backend individually.
 
