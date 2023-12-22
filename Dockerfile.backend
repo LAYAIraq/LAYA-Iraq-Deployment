@@ -8,22 +8,21 @@ FROM node:9.9.0-alpine
 
 # additional packages needed for installing certain dependencies
 RUN apk add --update python make g++ git
-ARG ACC_BE
-RUN git clone https://oauth2:${ACC_BE}@gitlab.informatik.hu-berlin.de/laya/vechta/laya-vechta-backend.git
+RUN git clone https://github.com/LAYAIraq/LAYA-Iraq-Backend.git
 
 # Build Production version of LAYA backend
-WORKDIR /laya-vechta-backend
+WORKDIR /LAYA-Iraq-Backend
 RUN npm install
 
 # create directories for files, including sample courses
-ARG FILES_PATH
+ARG FILES_PATH=./server/files
 RUN mkdir -p ${FILES_PATH}
 RUN mkdir -p ${FILES_PATH}/st0r31d
 RUN mkdir -p ${FILES_PATH}/st0r31d700l
 
 # USE SAMPLE DATABASE AS DB
-ARG DB_PATH
-ARG DB_NAME
+ARG DB_PATH=./server/db
+ARG DB_NAME=laya-data.sqlite3
 RUN mkdir -p ${DB_PATH}
 RUN cp sample-database.sqlite3 ${DB_PATH}/${DB_NAME}
 
