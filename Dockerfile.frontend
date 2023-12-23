@@ -4,6 +4,10 @@ FROM node:16-alpine as builder
 
 RUN apk add --update git
 ARG ACC_FE
+ARG VUE_APP_CHAT
+ARG VUE_APP_WHITEBOARD
+ENV VUE_APP_CHAT $VUE_APP_CHAT
+ENV VUE_APP_WHITEBOARD
 RUN git clone https://github.com/LAYAIraq/LAYA-Iraq-Frontend.git
 WORKDIR /LAYA-Iraq-Frontend
 RUN npm install
