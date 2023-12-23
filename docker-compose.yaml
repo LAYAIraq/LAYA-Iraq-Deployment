@@ -6,6 +6,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.frontend
+      args:
+        VUE_APP_CHAT: $VUE_APP_CHAT
+        VUE_APP_WHITEBOARD: $VUE_APP_WHITEBOARD
     container_name: laya-frontend
     restart: always
     ports:
@@ -13,6 +16,8 @@ services:
     environment:
       - VUE_APP_BACKEND_PORT=3001
       - VUE_APP_MAX_FILE_SIZE=$FILES_MAX_SIZE
+      - VUE_APP_CHAT=$VUE_APP_CHAT
+      - VUE_APP_WHITEBOARD=$VUE_APP_WHITEBOARD
   laya-backend:
     image: laya-backend:latest
     build:
@@ -40,6 +45,8 @@ services:
       - MAIL_HOST=$MAIL_HOST
       - MAIL_PORT=$MAIL_PORT
       - MAIL_CONNECTOR=$MAIL_CONNECTOR
+      - VUE_APP_CHAT=$VUE_APP_CHAT
+      - VUE_APP_WHITEBOARD=$VUE_APP_WHITEBOARD
     volumes:
       - laya-db:/LAYA-Iraq-Backend/${DB_PATH}
       - laya-backend-files:/LAYA-Iraq-Backend/${FILES_PATH}
@@ -66,6 +73,10 @@ services:
     links:
       - laya-frontend
       - laya-backend
+  whiteboard:
+    image: lovasoa/wbo:latest
+    volumes:
+      - ./wbo-boards:/opt/app/server-data
 
 volumes:
   laya-backend-files:
