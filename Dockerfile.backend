@@ -24,7 +24,7 @@ RUN mkdir -p ${FILES_PATH}/st0r31d700l
 ARG DB_PATH=./server/db
 ARG DB_NAME=laya-data.sqlite3
 RUN mkdir -p ${DB_PATH}
-RUN cp sample-database.sqlite3 ${DB_PATH}/${DB_NAME}
+# RUN cp sample-database.sqlite3 ${DB_PATH}/${DB_NAME}
 
 ARG API_PORT
 EXPOSE ${API_PORT}
